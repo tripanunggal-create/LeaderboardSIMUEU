@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SIM Innovation Project — Leaderboard | Universitas Esa Unggul</title>
+  <meta name="theme-color" content="#1F4E79" />
+  <!-- PWA Manifest Data URI -->
+  <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22SIM%20Innovation%20Leaderboard%20-%20UEU%22%2C%22short_name%22%3A%22SIM%20Leaderboard%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F8FAFC%22%2C%22theme_color%22%3A%22%231F4E79%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgcng9JzIyJyBmaWxsPScjMUY0RTc5Jy8%2BPHRleHQgeD0nNTAlJyB5PSc2OCUnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXdlaWdodD0nYm9sZCcgZm9udC1zaXplPSc0OCcgZmlsbD0nI0YyOEMyOCcgdGV4dC1hbmNob3I9J21pZGRsZSc%2BU0lNPC90ZXh0Pjwvc3ZnPic%3D%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            ueu: {
+              blue: '#1F4E79',
+              dark: '#143554',
+              light: '#2D6BA3',
+              orange: '#F28C28',
+              orangeHover: '#D97719',
+              bg: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Full Page Blogger Override */
+    #sim-ueu-root {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background-color: #F8FAFC;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(31, 78, 121, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(242, 140, 40, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(31, 78, 121, 0.05) 0px, transparent 50%);
+      overflow-y: auto;
+      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #0F172A;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 32px -4px rgba(31, 78, 121, 0.07);
+    }
+
+    .glass-sidebar {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid rgba(31, 78, 121, 0.08);
+    }
+
+    .glass-bottom-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(31, 78, 121, 0.1);
+      box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    /* Custom Scrollbar */
+    #sim-ueu-root::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    #sim-ueu-root::-webkit-scrollbar-track {
+      background: rgba(241, 245, 249, 0.6);
+    }
+    #sim-ueu-root::-webkit-scrollbar-thumb {
+      background: rgba(31, 78, 121, 0.25);
+      border-radius: 999px;
+    }
+    #sim-ueu-root::-webkit-scrollbar-thumb:hover {
+      background: rgba(31, 78, 121, 0.45);
+    }
+
+    /* Range Slider Styling */
+    input[type="range"].ueu-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #E2E8F0;
+      outline: none;
+    }
+    input[type="range"].ueu-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1F4E79;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(31, 78, 121, 0.35);
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    input[type="range"].ueu-slider::-webkit-slider-thumb:hover {
+      background: #F28C28;
+      transform: scale(1.15);
+    }
+
+    /* Responsive Layout Rules */
+    @media (min-width: 1024px) {
+      .desktop-sidebar { display: flex; }
+      .mobile-bottom-nav { display: none; }
+      .main-content-wrapper { margin-left: 260px; padding-bottom: 2.5rem; }
+    }
+    @media (max-width: 1023px) {
+      .desktop-sidebar { display: none; }
+      .mobile-bottom-nav { display: flex; }
+      .main-content-wrapper { margin-left: 0; padding-bottom: 5.5rem; }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(242, 140, 40, 0.35); }
+      50% { box-shadow: 0 0 0 10px rgba(242, 140, 40, 0); }
+    }
+    .rank-1-glow {
+      animation: pulseGlow 3s infinite;
+    }
+  </style>
+</head>
+<body>
+
+<div id="sim-ueu-root">
+  <!-- PREVIEW MODE BANNER (Otomatis hilang jika IS_PREVIEW = false) -->
+  <div id="preview-banner" class="hidden bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white text-xs font-semibold px-4 py-2 text-center shadow-sm sticky top-0 z-50 flex items-center justify-center gap-2 flex-wrap">
+    <span class="inline-flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded-full">
+      <i data-lucide="flask-conical" class="w-3.5 h-3.5"></i> MODE PREVIEW AKTIF
+    </span>
+    <span>Menggunakan memori lokal sementara (maks. 2 data contoh). Ubah <code>IS_PREVIEW = false</code> untuk koneksi Supabase 100%.</span>
+  </div>
+
+  <!-- DESKTOP FIXED SIDEBAR -->
+  <aside class="desktop-sidebar fixed top-0 left-0 bottom-0 w-[260px] glass-sidebar z-40 flex-col justify-between p-5">
+    <div>
+      <!-- Brand Identity -->
+      <div class="flex items-center gap-3 pb-5 border-b border-slate-200/80">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#1F4E79] to-[#2D6BA3] flex items-center justify-center text-white font-extrabold text-lg shadow-md relative">
+          SIM
+          <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#F28C28] border-2 border-white"></span>
+        </div>
+        <div>
+          <div class="text-xs font-bold uppercase tracking-wider text-[#F28C28]">Esa Unggul</div>
+          <div class="text-sm font-extrabold text-[#1F4E79] leading-tight">Innovation Tracker</div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="mt-6 space-y-1.5" id="desktop-nav-links">
+        <button onclick="switchTab('leaderboard')" data-tab="leaderboard" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-[#1F4E79] text-white shadow-sm">
+          <i data-lucide="trophy" class="w-4 h-4"></i>
+          <span>Leaderboard & Podium</span>
+        </button>
+
+        <button onclick="switchTab('student')" data-tab="student" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100/80 transition-all">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          <span>Portal Kelompok</span>
+        </button>
+
+        <button onclick="switchTab('admin')" data-tab="admin" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100/80 transition-all">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>Panel Mode Dosen</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Active Session Status Card -->
+    <div class="space-y-3">
+      <div id="sidebar-session-box" class="p-3.5 rounded-2xl bg-slate-100/90 border border-slate-200/70 text-xs">
+        <div class="text-slate-500 font-medium mb-1">Status Akses:</div>
+        <div id="sidebar-role-label" class="font-bold text-[#1F4E79] flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Pengunjung (Publik)
+        </div>
+        <button id="sidebar-logout-btn" onclick="handleLogout()" class="hidden mt-2.5 w-full py-1.5 px-3 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Keluar Sesi
+        </button>
+      </div>
+      <div class="text-[11px] text-center text-slate-400 font-medium">
+        MK Sistem Informasi Manajemen<br/>Universitas Esa Unggul
+      </div>
+    </div>
+  </aside>
+
+  <!-- MOBILE FLOATING BOTTOM NAVIGATION -->
+  <nav class="mobile-bottom-nav fixed bottom-0 left-0 right-0 glass-bottom-nav z-40 px-3 py-2 justify-around items-center">
+    <button onclick="switchTab('leaderboard')" data-tab="leaderboard" class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-[#1F4E79] font-bold text-[11px]">
+      <i data-lucide="trophy" class="w-5 h-5"></i>
+      <span>Leaderboard</span>
+    </button>
+    <button onclick="switchTab('student')" data-tab="student" class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-slate-500 font-semibold text-[11px]">
+      <i data-lucide="users" class="w-5 h-5"></i>
+      <span>Portal Tim</span>
+    </button>
+    <button onclick="switchTab('admin')" data-tab="admin" class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-slate-500 font-semibold text-[11px]">
+      <i data-lucide="shield-check" class="w-5 h-5"></i>
+      <span>Mode Dosen</span>
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="main-content-wrapper min-h-screen px-4 sm:px-6 lg:px-8 pt-6">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- TOP HEADER -->
+      <header class="glass-panel rounded-3xl p-5 sm:p-7 mb-6 relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-64 h-64 bg-gradient-to-bl from-[#F28C28]/15 to-transparent rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 relative z-10">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1F4E79]/10 text-[#1F4E79] text-xs font-bold mb-2">
+              <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-[#F28C28]"></i>
+              <span id="header-term-badge">Universitas Esa Unggul • Sistem Informasi Manajemen</span>
+            </div>
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#1F4E79] tracking-tight">
+              SIM INNOVATION PROJECT — <span class="text-[#F28C28]">LEADERBOARD</span>
+            </h1>
+            <p class="text-slate-600 text-xs sm:text-sm mt-1 font-medium">
+              Dari Permasalahan Nyata Menuju Solusi Digital | Universitas Esa Unggul
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2.5 self-start md:self-center">
+            <button onclick="refreshAllData()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-[#1F4E79]"></i>
+              <span>Segarkan</span>
+            </button>
+            <button onclick="switchTab('admin')" class="px-4 py-2 rounded-xl bg-[#1F4E79] hover:bg-[#143554] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+              <i data-lucide="lock" class="w-3.5 h-3.5 text-[#F28C28]"></i>
+              <span id="header-admin-btn-text">Mode Dosen</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ========================================================= -->
+      <!-- VIEW 1: LEADERBOARD & PODIUM (PUBLIK)                     -->
+      <!-- ========================================================= -->
+      <section id="view-leaderboard" class="space-y-6">
+        
+        <!-- 4 KPI SUMMARY CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center shrink-0">
+              <i data-lucide="layers" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-slate-500">Total Kelompok Aktif</div>
+              <div class="text-2xl font-extrabold text-[#1F4E79]" id="kpi-total-groups">0</div>
+              <div class="text-[11px] text-slate-400 font-medium">Tim Inovasi Terdaftar</div>
+            </div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-[#F28C28]/15 text-[#F28C28] flex items-center justify-center shrink-0">
+              <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-slate-500">Rata-Rata Skor Kelas</div>
+              <div class="text-2xl font-extrabold text-slate-800" id="kpi-avg-score">0.0</div>
+              <div class="text-[11px] text-emerald-600 font-semibold">Skala Rubrik 0–100</div>
+            </div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 flex items-center justify-center shrink-0">
+              <i data-lucide="crown" class="w-6 h-6"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-semibold text-slate-500">Peringkat #1 Saat Ini</div>
+              <div class="text-base font-extrabold text-[#1F4E79] truncate" id="kpi-top-group">-</div>
+              <div class="text-[11px] text-[#F28C28] font-bold" id="kpi-top-score">Skor: 0</div>
+            </div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-semibold text-slate-500">Fase Minggu Berjalan</div>
+              <div class="text-sm font-extrabold text-slate-800 truncate" id="kpi-current-week">Week 8–14</div>
+              <div class="text-[11px] text-slate-400 font-medium">Progress Proyek SIM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOP 3 PODIUM SECTION -->
+        <div class="glass-panel rounded-3xl p-5 sm:p-7">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h2 class="text-lg font-extrabold text-[#1F4E79] flex items-center gap-2">
+                <i data-lucide="award" class="w-5 h-5 text-[#F28C28]"></i>
+                Podium Top 3 Inovasi Terbaik
+              </h2>
+              <p class="text-xs text-slate-500">Klasemen sementara berdasarkan akumulasi penilaian rubrik dosen</p>
+            </div>
+          </div>
+
+          <div id="podium-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end pt-2">
+            <!-- Diisi dinamis oleh JS -->
+          </div>
+        </div>
+
+        <!-- FILTER, SEARCH & MAIN LEADERBOARD TABLE -->
+        <div class="glass-panel rounded-3xl p-5 sm:p-7">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-lg font-extrabold text-[#1F4E79]">Klasemen & Rincian Penilaian Rubrik</h2>
+              <p class="text-xs text-slate-500">Klik baris kelompok untuk melihat deskripsi proyek & peran anggota tim</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <!-- Search Box -->
+              <div class="relative">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="search-input" oninput="renderLeaderboard()" placeholder="Cari tim atau sistem..." class="w-full sm:w-60 pl-9 pr-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#1F4E79]" />
+              </div>
+
+              <!-- Category Filter -->
+              <select id="category-filter" onchange="renderLeaderboard()" class="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none focus:border-[#1F4E79]">
+                <option value="ALL">Semua Kategori Bidang</option>
+                <option value="UMKM">UMKM</option>
+                <option value="Retail">Retail</option>
+                <option value="Restoran">Restoran</option>
+                <option value="Pendidikan">Pendidikan</option>
+                <option value="SDM">SDM</option>
+                <option value="Organisasi">Organisasi</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Rubric Legend Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-5 p-3 rounded-2xl bg-slate-100/80 border border-slate-200/70 text-[11px]">
+            <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg">
+              <span class="text-slate-600 font-semibold">1. Empathize</span>
+              <span class="font-extrabold text-[#1F4E79]">15%</span>
+            </div>
+            <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg">
+              <span class="text-slate-600 font-semibold">2. Ideate</span>
+              <span class="font-extrabold text-[#1F4E79]">15%</span>
+            </div>
+            <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg">
+              <span class="text-slate-600 font-semibold">3. Prototype</span>
+              <span class="font-extrabold text-[#1F4E79]">25%</span>
+            </div>
+            <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg">
+              <span class="text-slate-600 font-semibold">4. Testing</span>
+              <span class="font-extrabold text-[#1F4E79]">15%</span>
+            </div>
+            <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg">
+              <span class="text-slate-600 font-semibold">5. Final Product</span>
+              <span class="font-extrabold text-[#1F4E79]">20%</span>
+            </div>
+            <div class="flex items-center justify-between bg-white px-2.5 py-1.5 rounded-lg">
+              <span class="text-slate-600 font-semibold">6. Presentation</span>
+              <span class="font-extrabold text-[#1F4E79]">10%</span>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-x-auto rounded-2xl border border-slate-200/80 bg-white">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50/90 border-b border-slate-200 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+                  <th class="py-3.5 px-4 text-center w-20">Rank</th>
+                  <th class="py-3.5 px-4">Kelompok & Anggota</th>
+                  <th class="py-3.5 px-4">Sistem Informasi & Bidang</th>
+                  <th class="py-3.5 px-3 text-center" title="Empathize & Define (Maks 15)">Emp<br/><span class="text-[9px] text-[#F28C28]">(15)</span></th>
+                  <th class="py-3.5 px-3 text-center" title="Ideate & Solution Design (Maks 15)">Ide<br/><span class="text-[9px] text-[#F28C28]">(15)</span></th>
+                  <th class="py-3.5 px-3 text-center" title="Prototype / System Dev (Maks 25)">Pro<br/><span class="text-[9px] text-[#F28C28]">(25)</span></th>
+                  <th class="py-3.5 px-3 text-center" title="Testing & Improvement (Maks 15)">Tst<br/><span class="text-[9px] text-[#F28C28]">(15)</span></th>
+                  <th class="py-3.5 px-3 text-center" title="Final Product & Functionality (Maks 20)">Fin<br/><span class="text-[9px] text-[#F28C28]">(20)</span></th>
+                  <th class="py-3.5 px-3 text-center" title="Presentation & Collaboration (Maks 10)">Prs<br/><span class="text-[9px] text-[#F28C28]">(10)</span></th>
+                  <th class="py-3.5 px-4 w-40">Total Skor</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-tbody" class="divide-y divide-slate-100 text-xs">
+                <!-- Diisi dinamis -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- VIEW 2: PORTAL KELOMPOK MAHASISWA (EDIT PROFIL TIM)       -->
+      <!-- ========================================================= -->
+      <section id="view-student" class="hidden space-y-6">
+        
+        <!-- Form Login Kelompok (Tampil jika belum login sebagai mahasiswa) -->
+        <div id="student-login-card" class="max-w-md mx-auto glass-panel rounded-3xl p-6 sm:p-8">
+          <div class="w-12 h-12 rounded-2xl bg-[#1F4E79] text-white flex items-center justify-center mb-4 shadow-md">
+            <i data-lucide="users" class="w-6 h-6 text-[#F28C28]"></i>
+          </div>
+          <h2 class="text-xl font-extrabold text-[#1F4E79]">Portal Kelompok Mahasiswa</h2>
+          <p class="text-xs text-slate-500 mt-1 mb-6">
+            Masuk menggunakan <strong>Username</strong> & <strong>PIN Kelompok</strong> yang diberikan dosen untuk memperbarui nama tim, anggota, dan deskripsi proyek Anda.
+          </p>
+
+          <form onsubmit="handleStudentLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Username Kelompok</label>
+              <input type="text" id="stu-login-username" required placeholder="Contoh: kel01_nusantara" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-[#1F4E79]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">PIN / Password Kelompok</label>
+              <input type="password" id="stu-login-password" required placeholder="••••••" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-[#1F4E79]" />
+            </div>
+            <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-[#1F4E79] hover:bg-[#143554] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+              <i data-lucide="log-in" class="w-4 h-4"></i> Masuk ke Portal Tim
+            </button>
+          </form>
+
+          <!-- Tombol Quick Login khusus Mode Preview -->
+          <div id="preview-student-quick" class="hidden mt-5 pt-4 border-t border-slate-200/80">
+            <p class="text-[11px] font-bold text-amber-600 mb-2 flex items-center gap-1">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i> Pintasan Uji Coba (Mode Preview):
+            </p>
+            <button type="button" onclick="quickLoginStudent()" class="w-full py-2 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 font-bold text-xs transition">
+              Quick Login: Tim Nusantara Tech (kel01)
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Edit Profil Kelompok (Tampil setelah kelompok login) -->
+        <div id="student-editor-card" class="hidden max-w-3xl mx-auto glass-panel rounded-3xl p-6 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-slate-200/80 mb-6">
+            <div>
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold mb-1">
+                Akses Edit Identitas Tim Aktif
+              </span>
+              <h2 class="text-xl font-extrabold text-[#1F4E79]" id="stu-edit-header">Edit Profil Kelompok</h2>
+              <p class="text-xs text-slate-500">Perubahan akan langsung tampil di Leaderboard publik. (Nilai rubrik dikunci oleh Dosen).</p>
+            </div>
+            <button onclick="handleLogout()" class="self-start px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold flex items-center gap-1.5">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Keluar
+            </button>
+          </div>
+
+          <form onsubmit="handleSaveStudentProfile(event)" class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kelompok *</label>
+                <input type="text" id="stu-group-name" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-semibold focus:outline-none focus:border-[#1F4E79]" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Kategori Bidang Usaha *</label>
+                <select id="stu-category" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-semibold focus:outline-none focus:border-[#1F4E79]">
+                  <option value="UMKM">UMKM</option>
+                  <option value="Retail">Retail</option>
+                  <option value="Restoran">Restoran</option>
+                  <option value="Pendidikan">Pendidikan</option>
+                  <option value="SDM">SDM</option>
+                  <option value="Organisasi">Organisasi</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Judul Sistem Informasi yang Dibangun *</label>
+              <input type="text" id="stu-system-title" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-semibold focus:outline-none focus:border-[#1F4E79]" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi Permasalahan & Solusi Digital *</label>
+              <textarea id="stu-description" rows="3" required placeholder="Jelaskan studi kasus nyata yang diangkat dan fitur utama sistem informasi kelompok Anda..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-[#1F4E79]"></textarea>
+            </div>
+
+            <!-- Daftar Anggota (4-5 Mahasiswa) -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-xs font-bold text-slate-700">Daftar Anggota Kelompok & Peran (4–5 Mahasiswa)</label>
+                <button type="button" onclick="addMemberRow('stu-members-list')" class="text-xs font-bold text-[#1F4E79] hover:text-[#F28C28] flex items-center gap-1">
+                  <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Tambah Anggota
+                </button>
+              </div>
+              <div id="stu-members-list" class="space-y-2.5">
+                <!-- Baris anggota diisi dinamis -->
+              </div>
+            </div>
+
+            <div class="pt-3 flex justify-end">
+              <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#F28C28] hover:bg-[#D97719] text-white font-bold text-sm shadow-md transition flex items-center gap-2">
+                <i data-lucide="save" class="w-4 h-4"></i> Simpan Perubahan Profil
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- VIEW 3: PANEL MODE DOSEN (ADMIN & PENILAIAN RUBRIK)       -->
+      <!-- ========================================================= -->
+      <section id="view-admin" class="hidden space-y-6">
+        
+        <!-- Form Login Dosen (Supabase Auth) -->
+        <div id="admin-login-card" class="max-w-md mx-auto glass-panel rounded-3xl p-6 sm:p-8">
+          <div class="w-12 h-12 rounded-2xl bg-[#F28C28] text-white flex items-center justify-center mb-4 shadow-md">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-xl font-extrabold text-[#1F4E79]">Mode Dosen — Kelola Nilai</h2>
+          <p class="text-xs text-slate-500 mt-1 mb-6">
+            Login menggunakan akun Dosen terdaftar untuk mengelola kelompok, input skor rubrik real-time, badge spesial, dan ekspor rekap nilai.
+          </p>
+
+          <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Email Dosen</label>
+              <input type="email" id="adm-login-email" required placeholder="dosen@esaunggul.ac.id" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-[#1F4E79]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
+              <input type="password" id="adm-login-password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-[#1F4E79]" />
+            </div>
+            <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-[#1F4E79] hover:bg-[#143554] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+              <i data-lucide="key-round" class="w-4 h-4 text-[#F28C28]"></i> Masuk Sebagai Dosen
+            </button>
+          </form>
+
+          <!-- Tombol Quick Login khusus Mode Preview -->
+          <div id="preview-admin-quick" class="hidden mt-5 pt-4 border-t border-slate-200/80">
+            <p class="text-[11px] font-bold text-amber-600 mb-2 flex items-center gap-1">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i> Pintasan Uji Coba (Mode Preview):
+            </p>
+            <button type="button" onclick="quickLoginAdmin()" class="w-full py-2 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 font-bold text-xs transition">
+              Quick Login: Dosen Pengampu SIM
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Panel Dosen (Tampil setelah Dosen login) -->
+        <div id="admin-dashboard-card" class="hidden space-y-6">
+          
+          <!-- Bar Kontrol Atas Dosen: Pengaturan Fase Minggu, Tambah Kelompok, Ekspor CSV -->
+          <div class="glass-panel rounded-3xl p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-500 uppercase">Fase Minggu Berjalan</label>
+                <div class="flex items-center gap-2 mt-1">
+                  <input type="text" id="adm-week-input" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-[#1F4E79] w-56" placeholder="Week 11 — Prototyping" />
+                  <button onclick="handleUpdateSettings()" class="px-3 py-1.5 rounded-xl bg-[#1F4E79] text-white text-xs font-bold hover:bg-[#143554] transition">
+                    Simpan
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button onclick="openGroupModal()" class="px-4 py-2 rounded-xl bg-[#F28C28] hover:bg-[#D97719] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+                <i data-lucide="plus" class="w-4 h-4"></i> Tambah Kelompok Baru
+              </button>
+              <button onclick="exportToCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+                <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Ekspor Rekap CSV / Excel
+              </button>
+              <button onclick="handleLogout()" class="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold flex items-center gap-1.5 transition">
+                <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
+              </button>
+            </div>
+          </div>
+
+          <!-- Daftar Kartu Penilaian Real-Time per Kelompok -->
+          <div id="admin-groups-list" class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+            <!-- Kartu penilaian tiap kelompok diisi dinamis -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- MODAL DETAIL KELOMPOK (KLIK DARI LEADERBOARD)            -->
+  <!-- ========================================================= -->
+  <div id="detail-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-start justify-between gap-4 pb-4 border-b border-slate-100">
+        <div>
+          <span id="det-category" class="inline-block px-2.5 py-0.5 rounded-full bg-[#1F4E79]/10 text-[#1F4E79] text-[11px] font-bold mb-1">Kategori</span>
+          <h3 id="det-group-name" class="text-xl font-extrabold text-[#1F4E79]">Nama Kelompok</h3>
+          <p id="det-system-title" class="text-sm font-bold text-[#F28C28]">Judul Sistem</p>
+        </div>
+        <button onclick="closeDetailModal()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="mt-4 space-y-4">
+        <div>
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-1">Deskripsi Permasalahan & Solusi</h4>
+          <p id="det-description" class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100"></p>
+        </div>
+
+        <div id="det-badges-wrapper">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-1.5">Badge Pencapaian Spesial</h4>
+          <div id="det-badges" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">Anggota Tim & Peran</h4>
+          <div id="det-members" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL TAMBAH / EDIT KELOMPOK (KHUSUS DOSEN)               -->
+  <!-- ========================================================= -->
+  <div id="group-form-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+        <h3 id="modal-form-title" class="text-lg font-extrabold text-[#1F4E79]">Tambah Kelompok Baru</h3>
+        <button onclick="closeGroupModal()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleAdminSaveGroup(event)" class="space-y-4">
+        <input type="hidden" id="adm-edit-group-id" />
+
+        <!-- Kredensial Login Mahasiswa -->
+        <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-amber-900 mb-1">Username Login Mahasiswa *</label>
+            <input type="text" id="adm-form-username" required placeholder="kel03_garuda" class="w-full px-3 py-2 rounded-xl bg-white border border-amber-200 text-xs font-bold" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-amber-900 mb-1">PIN / Password Login Mahasiswa *</label>
+            <input type="text" id="adm-form-password" required placeholder="123456" class="w-full px-3 py-2 rounded-xl bg-white border border-amber-200 text-xs font-bold" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kelompok *</label>
+            <input type="text" id="adm-form-name" required placeholder="Tim Garuda Digital" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Kategori Bidang *</label>
+            <select id="adm-form-category" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold">
+              <option value="UMKM">UMKM</option>
+              <option value="Retail">Retail</option>
+              <option value="Restoran">Restoran</option>
+              <option value="Pendidikan">Pendidikan</option>
+              <option value="SDM">SDM</option>
+              <option value="Organisasi">Organisasi</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Judul Sistem Informasi *</label>
+          <input type="text" id="adm-form-title" required placeholder="Sistem Reservasi & Antrean Restoran" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi Proyek</label>
+          <textarea id="adm-form-desc" rows="2" placeholder="Deskripsi singkat solusi digital kelompok..." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs"></textarea>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-bold text-slate-700">Anggota & Peran</label>
+            <button type="button" onclick="addMemberRow('adm-members-list')" class="text-xs font-bold text-[#1F4E79] hover:text-[#F28C28]">+ Tambah Baris</button>
+          </div>
+          <div id="adm-members-list" class="space-y-2"></div>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2">
+          <button type="button" onclick="closeGroupModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold">Batal</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-[#1F4E79] hover:bg-[#143554] text-white text-xs font-bold">Simpan Kelompok</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-box" class="fixed top-5 right-5 z-[9999999] hidden">
+    <div id="toast-content" class="px-4 py-3 rounded-2xl shadow-xl text-xs font-bold text-white flex items-center gap-2"></div>
+  </div>
+</div>
+
+<!-- MAIN APPLICATION SCRIPT -->
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  // =========================================================================
+  // KONFIGURASI APLIKASI (UBAH IS_PREVIEW = false SAAT DEPLOY KE PRODUKSI)
+  // =========================================================================
+  const IS_PREVIEW = false; // Ubah menjadi false SAAT DEPLOY agar mode preview & data dummy hilang dan terhubung 100% ke Supabase
+  const SUPABASE_URL = "https://cyngcccpfugcirsmdsqd.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_kpcyD1r9frA7N3swKjQyoA_fZR9EgHO";
+
+  // Inisialisasi Client Supabase (hanya aktif jika IS_PREVIEW = false)
+  const supabase = !IS_PREVIEW ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+  // Daftar Badge Spesial Tersedia
+  const AVAILABLE_BADGES = [
+    "Best Problem Discovery",
+    "Best AI Utilization",
+    "Best UI/UX Design",
+    "Most Impactful Solution"
+  ];
+
+  const MEMBER_ROLES = [
+    "Project Manager (PM)",
+    "Business Analyst (BA)",
+    "System Designer",
+    "Data Specialist",
+    "UI/UX & Developer"
+  ];
+
+  // =========================================================================
+  // STATE APLIKASI & DATA PREVIEW MINIMALIS (MAKS. 2 BARIS SAAT PREVIEW)
+  // =========================================================================
+  let appState = {
+    groups: [],
+    settings: {
+      id: 1,
+      current_week: "Week 11 — System Prototyping & Testing",
+      academic_term: "Universitas Esa Unggul • Genap 2026"
+    },
+    session: {
+      role: 'public', // 'public' | 'student' | 'admin'
+      studentGroupId: null,
+      adminEmail: null
+    }
+  };
+
+  // Data Preview Minimalis (Hanya 2 baris sesuai aturan ketat IS_PREVIEW)
+  const PREVIEW_MOCK_GROUPS = [
+    {
+      id: "prev-1",
+      group_username: "kel01",
+      group_password: "123",
+      group_name: "Tim Nusantara Tech",
+      system_title: "NusaPOS — Sistem Kasir & Prediksi Stok UMKM Kopi",
+      description: "Digitalisasi pencatatan transaksi kedai kopi lokal dengan fitur peringatan stok bahan baku otomatis berbasis tren penjualan harian.",
+      category: "UMKM",
+      members: [
+        { name: "Rizky Pratama", role: "Project Manager (PM)" },
+        { name: "Nadia Putri", role: "Business Analyst (BA)" },
+        { name: "Dimas Saputra", role: "System Designer" },
+        { name: "Alya Rahma", role: "Data Specialist" },
+        { name: "Fajar Nugroho", role: "UI/UX & Developer" }
+      ],
+      score_empathize: 14,
+      score_ideate: 14,
+      score_prototype: 23,
+      score_testing: 13,
+      score_final: 18,
+      score_presentation: 9,
+      previous_rank: 2,
+      badges: ["Best Problem Discovery", "Most Impactful Solution"]
+    },
+    {
+      id: "prev-2",
+      group_username: "kel02",
+      group_password: "123",
+      group_name: "Tim Garuda Digital",
+      system_title: "DineFlow — Smart Reservasi & Kitchen Display Restoran",
+      description: "Memangkas waktu tunggu pelanggan restoran keluarga melalui pemesanan QR meja yang terintegrasi langsung ke layar dapur.",
+      category: "Restoran",
+      members: [
+        { name: "Siti Aisyah", role: "Project Manager (PM)" },
+        { name: "Budi Santoso", role: "Business Analyst (BA)" },
+        { name: "Kevin Wijaya", role: "System Designer" },
+        { name: "Putri Lestari", role: "UI/UX & Developer" }
+      ],
+      score_empathize: 13,
+      score_ideate: 13,
+      score_prototype: 22,
+      score_testing: 12,
+      score_final: 17,
+      score_presentation: 9,
+      previous_rank: 1,
+      badges: ["Best UI/UX Design"]
+    }
+  ];
+
+  // =========================================================================
+  // SERVICE WORKER PWA DINAMIS (BLOB)
+  // =========================================================================
+  if ('serviceWorker' in navigator) {
+    const swCode = `
+      self.addEventListener('install', (e) => self.skipWaiting());
+      self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
+      self.addEventListener('fetch', (e) => {
+        e.respondWith(fetch(e.request).catch(() => new Response('Offline mode')));
+      });
+    `;
+    const blob = new Blob([swCode], { type: 'application/javascript' });
+    navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+  }
+
+  // =========================================================================
+  // HELPER FUNCTIONS
+  // =========================================================================
+  function calcTotalScore(g) {
+    return (
+      Number(g.score_empathize || 0) +
+      Number(g.score_ideate || 0) +
+      Number(g.score_prototype || 0) +
+      Number(g.score_testing || 0) +
+      Number(g.score_final || 0) +
+      Number(g.score_presentation || 0)
+    );
+  }
+
+  function showToast(msg, type = 'success') {
+    const box = document.getElementById('toast-box');
+    const content = document.getElementById('toast-content');
+    const bg = type === 'error' ? 'bg-rose-600' : type === 'info' ? 'bg-[#1F4E79]' : 'bg-emerald-600';
+    content.className = `px-4 py-3 rounded-2xl shadow-xl text-xs font-bold text-white flex items-center gap-2 ${bg}`;
+    content.innerHTML = `<span>${msg}</span>`;
+    box.classList.remove('hidden');
+    setTimeout(() => box.classList.add('hidden'), 3200);
+  }
+
+  function escapeHTML(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+  }
+
+  // =========================================================================
+  // INISIALISASI & PENGAMBILAN DATA (PREVIEW VS SUPABASE PRODUKSI)
+  // =========================================================================
+  async function initApp() {
+    if (IS_PREVIEW) {
+      document.getElementById('preview-banner').classList.remove('hidden');
+      document.getElementById('preview-student-quick').classList.remove('hidden');
+      document.getElementById('preview-admin-quick').classList.remove('hidden');
+      appState.groups = JSON.parse(JSON.stringify(PREVIEW_MOCK_GROUPS));
+      renderAll();
+    } else {
+      // Pastikan elemen preview 100% tersembunyi di mode produksi
+      document.getElementById('preview-banner').remove();
+      document.getElementById('preview-student-quick').remove();
+      document.getElementById('preview-admin-quick').remove();
+
+      // Cek sesi Supabase Auth aktif (Dosen)
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && session.user) {
+          appState.session.role = 'admin';
+          appState.session.adminEmail = session.user.email;
+        }
+      } catch (err) {
+        console.error("Session check error:", err);
+      }
+
+      await fetchProductionData();
+    }
+    lucide.createIcons();
+  }
+
+  async function fetchProductionData() {
+    if (IS_PREVIEW) {
+      renderAll();
+      return;
+    }
+    try {
+      const [groupsRes, settingsRes] = await Promise.all([
+        supabase.from('sim_groups').select('*').order('created_at', { ascending: true }),
+        supabase.from('sim_settings').select('*').eq('id', 1).maybeSingle()
+      ]);
+
+      if (groupsRes.error) throw groupsRes.error;
+      appState.groups = groupsRes.data || [];
+
+      if (settingsRes.data) {
+        appState.settings = settingsRes.data;
+      }
+      renderAll();
+    } catch (err) {
+      showToast("Gagal memuat data dari Supabase: " + err.message, "error");
+    }
+  }
+
+  window.refreshAllData = async function() {
+    if (IS_PREVIEW) {
+      renderAll();
+      showToast("Data preview disegarkan", "info");
+    } else {
+      await fetchProductionData();
+      showToast("Data disinkronkan dengan Supabase", "success");
+    }
+  };
+
+  // =========================================================================
+  // NAVIGASI TAB & STATUS SESI
+  // =========================================================================
+  window.switchTab = function(tabName) {
+    ['leaderboard', 'student', 'admin'].forEach(t => {
+      document.getElementById(`view-${t}`).classList.add('hidden');
+    });
+    document.getElementById(`view-${tabName}`).classList.remove('hidden');
+
+    // Update Desktop Nav Style
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      if (btn.dataset.tab === tabName) {
+        btn.className = "nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-[#1F4E79] text-white shadow-sm";
+      } else {
+        btn.className = "nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100/80 transition-all";
+      }
+    });
+
+    // Update Mobile Nav Style
+    document.querySelectorAll('.mob-nav-btn').forEach(btn => {
+      if (btn.dataset.tab === tabName) {
+        btn.className = "mob-nav-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-[#1F4E79] font-extrabold text-[11px]";
+      } else {
+        btn.className = "mob-nav-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-slate-500 font-semibold text-[11px]";
+      }
+    });
+
+    updateSessionUI();
+    lucide.createIcons();
+  };
+
+  function updateSessionUI() {
+    const roleLabel = document.getElementById('sidebar-role-label');
+    const logoutBtn = document.getElementById('sidebar-logout-btn');
+    const headerAdminBtn = document.getElementById('header-admin-btn-text');
+
+    // Student View Toggle
+    const stuLogin = document.getElementById('student-login-card');
+    const stuEditor = document.getElementById('student-editor-card');
+
+    // Admin View Toggle
+    const admLogin = document.getElementById('admin-login-card');
+    const admDash = document.getElementById('admin-dashboard-card');
+
+    if (appState.session.role === 'admin') {
+      roleLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-[#F28C28]"></span> Dosen (Admin Aktif)`;
+      logoutBtn.classList.remove('hidden');
+      headerAdminBtn.textContent = "Dashboard Dosen";
+      admLogin.classList.add('hidden');
+      admDash.classList.remove('hidden');
+      stuLogin.classList.remove('hidden');
+      stuEditor.classList.add('hidden');
+      renderAdminPanel();
+    } else if (appState.session.role === 'student') {
+      const grp = appState.groups.find(g => g.id === appState.session.studentGroupId);
+      roleLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-blue-500"></span> ${grp ? escapeHTML(grp.group_name) : 'Kelompok'}`;
+      logoutBtn.classList.remove('hidden');
+      headerAdminBtn.textContent = "Mode Dosen";
+      stuLogin.classList.add('hidden');
+      stuEditor.classList.remove('hidden');
+      admLogin.classList.remove('hidden');
+      admDash.classList.add('hidden');
+      populateStudentEditor();
+    } else {
+      roleLabel.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Pengunjung (Publik)`;
+      logoutBtn.classList.add('hidden');
+      headerAdminBtn.textContent = "Mode Dosen";
+      stuLogin.classList.remove('hidden');
+      stuEditor.classList.add('hidden');
+      admLogin.classList.remove('hidden');
+      admDash.classList.add('hidden');
+    }
+  }
+
+  window.handleLogout = async function() {
+    if (!IS_PREVIEW && appState.session.role === 'admin') {
+      await supabase.auth.signOut();
+    }
+    appState.session = { role: 'public', studentGroupId: null, adminEmail: null };
+    updateSessionUI();
+    showToast("Berhasil keluar dari sesi", "info");
+  };
+
+  // =========================================================================
+  // RENDER LEADERBOARD, KPI & PODIUM TOP 3
+  // =========================================================================
+  function getSortedGroups() {
+    return [...appState.groups]
+      .map(g => ({ ...g, totalScore: calcTotalScore(g) }))
+      .sort((a, b) => b.totalScore - a.totalScore);
+  }
+
+  function renderAll() {
+    document.getElementById('kpi-current-week').textContent = appState.settings.current_week || 'Week 8–14';
+    document.getElementById('header-term-badge').textContent = appState.settings.academic_term || 'Universitas Esa Unggul • Sistem Informasi Manajemen';
+    document.getElementById('adm-week-input').value = appState.settings.current_week || '';
+
+    renderKPIAndPodium();
+    renderLeaderboard();
+    updateSessionUI();
+    lucide.createIcons();
+  }
+
+  function renderKPIAndPodium() {
+    const sorted = getSortedGroups();
+    const total = sorted.length;
+    const avg = total > 0 ? (sorted.reduce((sum, g) => sum + g.totalScore, 0) / total).toFixed(1) : '0.0';
+    const top1 = sorted[0];
+
+    document.getElementById('kpi-total-groups').textContent = total;
+    document.getElementById('kpi-avg-score').textContent = avg;
+    document.getElementById('kpi-top-group').textContent = top1 ? top1.group_name : 'Belum ada data';
+    document.getElementById('kpi-top-score').textContent = top1 ? `Skor Tertinggi: ${top1.totalScore} / 100` : 'Skor: 0';
+
+    const podiumEl = document.getElementById('podium-container');
+    if (total === 0) {
+      podiumEl.innerHTML = `<div class="col-span-3 text-center py-8 text-xs text-slate-400 font-medium">Belum ada kelompok terdaftar di database.</div>`;
+      return;
+    }
+
+    // Susunan Podium Visual: Kiri (#2), Tengah (#1), Kanan (#3)
+    const slots = [
+      { rank: 2, group: sorted[1], orderClass: "order-2 md:order-1", heightClass: "md:min-h-[235px]", borderClass: "border-slate-300 bg-gradient-to-b from-slate-50 to-white", badgeBg: "bg-slate-200 text-slate-700", icon: "medal" },
+      { rank: 1, group: sorted[0], orderClass: "order-1 md:order-2", heightClass: "md:min-h-[270px] rank-1-glow", borderClass: "border-[#F28C28] border-2 bg-gradient-to-b from-amber-50/90 via-white to-orange-50/40", badgeBg: "bg-gradient-to-r from-[#F28C28] to-amber-500 text-white", icon: "crown" },
+      { rank: 3, group: sorted[2], orderClass: "order-3 md:order-3", heightClass: "md:min-h-[215px]", borderClass: "border-amber-700/30 bg-gradient-to-b from-orange-50/40 to-white", badgeBg: "bg-amber-800/15 text-amber-900", icon: "award" }
+    ];
+
+    podiumEl.innerHTML = slots.map(slot => {
+      if (!slot.group) {
+        return `<div class="${slot.orderClass} rounded-2xl border border-dashed border-slate-200 p-5 flex items-center justify-center text-xs text-slate-400 h-44">Posisi #${slot.rank} Kosong</div>`;
+      }
+      const g = slot.group;
+      const badgesHtml = (g.badges || []).slice(0, 2).map(b =>
+        `<span class="inline-block px-2 py-0.5 rounded-full bg-[#1F4E79]/10 text-[#1F4E79] text-[10px] font-bold">${escapeHTML(b)}</span>`
+      ).join('');
+
+      return `
+        <div onclick="openDetailModal('${g.id}')" class="${slot.orderClass} ${slot.heightClass} ${slot.borderClass} rounded-2xl p-5 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col justify-between relative">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold ${slot.badgeBg}">
+                <i data-lucide="${slot.icon}" class="w-3.5 h-3.5"></i> Juara #${slot.rank}
+              </span>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-600">${escapeHTML(g.category)}</span>
+            </div>
+            <h3 class="text-base sm:text-lg font-extrabold text-[#1F4E79] leading-snug">${escapeHTML(g.group_name)}</h3>
+            <p class="text-xs font-semibold text-slate-600 mt-1 line-clamp-2">${escapeHTML(g.system_title)}</p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-200/70">
+            <div class="flex flex-wrap gap-1 mb-2.5">${badgesHtml}</div>
+            <div class="flex items-end justify-between">
+              <span class="text-[11px] font-semibold text-slate-400">${(g.members || []).length} Anggota</span>
+              <div class="text-right">
+                <span class="text-2xl font-extrabold text-[#F28C28]">${g.totalScore}</span>
+                <span class="text-[11px] font-bold text-slate-400">/100</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.renderLeaderboard = function() {
+    const query = (document.getElementById('search-input').value || '').toLowerCase();
+    const cat = document.getElementById('category-filter').value;
+    const sorted = getSortedGroups();
+
+    // Simpan rank aktual sebelum difilter
+    const ranked = sorted.map((g, idx) => ({ ...g, currentRank: idx + 1 }));
+
+    const filtered = ranked.filter(g => {
+      const matchCat = cat === 'ALL' || g.category === cat;
+      const matchSearch = g.group_name.toLowerCase().includes(query) || g.system_title.toLowerCase().includes(query);
+      return matchCat && matchSearch;
+    });
+
+    const tbody = document.getElementById('leaderboard-tbody');
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="10" class="py-10 text-center text-slate-400 font-medium">Tidak ada data kelompok yang sesuai filter.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(g => {
+      const prev = g.previous_rank || g.currentRank;
+      const diff = prev - g.currentRank;
+      let trendHtml = `<span class="text-slate-400 text-[10px] font-bold flex items-center justify-center gap-0.5"><i data-lucide="minus" class="w-3 h-3"></i> 0</span>`;
+      if (diff > 0) {
+        trendHtml = `<span class="text-emerald-600 text-[10px] font-extrabold flex items-center justify-center gap-0.5"><i data-lucide="trending-up" class="w-3 h-3"></i> +${diff}</span>`;
+      } else if (diff < 0) {
+        trendHtml = `<span class="text-rose-500 text-[10px] font-extrabold flex items-center justify-center gap-0.5"><i data-lucide="trending-down" class="w-3 h-3"></i> ${diff}</span>`;
+      }
+
+      const rankBadge = g.currentRank === 1
+        ? `<div class="w-7 h-7 mx-auto rounded-full bg-[#F28C28] text-white font-extrabold flex items-center justify-center shadow-sm">1</div>`
+        : g.currentRank === 2
+        ? `<div class="w-7 h-7 mx-auto rounded-full bg-slate-600 text-white font-extrabold flex items-center justify-center">2</div>`
+        : g.currentRank === 3
+        ? `<div class="w-7 h-7 mx-auto rounded-full bg-amber-700 text-white font-extrabold flex items-center justify-center">3</div>`
+        : `<div class="w-7 h-7 mx-auto rounded-full bg-slate-100 text-slate-700 font-extrabold flex items-center justify-center">${g.currentRank}</div>`;
+
+      const memberNames = (g.members || []).map(m => escapeHTML(m.name)).join(', ');
+      const badgesMini = (g.badges || []).map(b => `<span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[9px] font-bold">${escapeHTML(b)}</span>`).join(' ');
+
+      return `
+        <tr onclick="openDetailModal('${g.id}')" class="hover:bg-blue-50/40 transition cursor-pointer">
+          <td class="py-3.5 px-4 text-center">
+            ${rankBadge}
+            <div class="mt-1">${trendHtml}</div>
+          </td>
+          <td class="py-3.5 px-4 max-w-[230px]">
+            <div class="font-extrabold text-[#1F4E79] text-sm">${escapeHTML(g.group_name)}</div>
+            <div class="text-[11px] text-slate-500 truncate mt-0.5" title="${memberNames}">${memberNames || 'Belum ada anggota'}</div>
+            <div class="flex flex-wrap gap-1 mt-1">${badgesMini}</div>
+          </td>
+          <td class="py-3.5 px-4 max-w-[240px]">
+            <div class="font-bold text-slate-800 line-clamp-1">${escapeHTML(g.system_title)}</div>
+            <span class="inline-block mt-1 px-2 py-0.5 rounded-md bg-[#1F4E79]/10 text-[#1F4E79] text-[10px] font-bold">${escapeHTML(g.category)}</span>
+          </td>
+          <td class="py-3.5 px-3 text-center font-bold text-slate-700">${g.score_empathize}</td>
+          <td class="py-3.5 px-3 text-center font-bold text-slate-700">${g.score_ideate}</td>
+          <td class="py-3.5 px-3 text-center font-bold text-slate-700">${g.score_prototype}</td>
+          <td class="py-3.5 px-3 text-center font-bold text-slate-700">${g.score_testing}</td>
+          <td class="py-3.5 px-3 text-center font-bold text-slate-700">${g.score_final}</td>
+          <td class="py-3.5 px-3 text-center font-bold text-slate-700">${g.score_presentation}</td>
+          <td class="py-3.5 px-4">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-extrabold text-sm text-[#1F4E79]">${g.totalScore}</span>
+              <span class="text-[10px] font-bold text-slate-400">100%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-[#1F4E79] to-[#F28C28]" style="width: ${Math.min(100, g.totalScore)}%"></div>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+    lucide.createIcons();
+  };
+
+  // =========================================================================
+  // MODAL DETAIL KELOMPOK
+  // =========================================================================
+  window.openDetailModal = function(groupId) {
+    const g = appState.groups.find(item => item.id === groupId);
+    if (!g) return;
+
+    document.getElementById('det-category').textContent = g.category;
+    document.getElementById('det-group-name').textContent = g.group_name;
+    document.getElementById('det-system-title').textContent = g.system_title;
+    document.getElementById('det-description').textContent = g.description || 'Belum ada deskripsi proyek yang ditambahkan oleh kelompok.';
+
+    const badgesWrap = document.getElementById('det-badges-wrapper');
+    const badgesEl = document.getElementById('det-badges');
+    if (g.badges && g.badges.length > 0) {
+      badgesWrap.classList.remove('hidden');
+      badgesEl.innerHTML = g.badges.map(b => `<span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold flex items-center gap-1"><i data-lucide="award" class="w-3.5 h-3.5"></i> ${escapeHTML(b)}</span>`).join('');
+    } else {
+      badgesWrap.classList.add('hidden');
+    }
+
+    const membersEl = document.getElementById('det-members');
+    membersEl.innerHTML = (g.members || []).map(m => `
+      <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-[#1F4E79] text-white font-bold text-xs flex items-center justify-center shrink-0">
+          ${escapeHTML((m.name || 'M')[0].toUpperCase())}
+        </div>
+        <div class="min-w-0">
+          <div class="text-xs font-extrabold text-slate-800 truncate">${escapeHTML(m.name)}</div>
+          <div class="text-[10px] font-bold text-[#F28C28] truncate">${escapeHTML(m.role)}</div>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('detail-modal').classList.remove('hidden');
+    lucide.createIcons();
+  };
+
+  window.closeDetailModal = function() {
+    document.getElementById('detail-modal').classList.add('hidden');
+  };
+
+  // =========================================================================
+  // PORTAL MAHASISWA (LOGIN VIA TABEL DATABASE & EDIT PROFIL KELOMPOK)
+  // =========================================================================
+  window.handleStudentLogin = async function(e) {
+    e.preventDefault();
+    const uname = document.getElementById('stu-login-username').value.trim();
+    const pwd = document.getElementById('stu-login-password').value.trim();
+
+    if (IS_PREVIEW) {
+      const found = appState.groups.find(g => g.group_username === uname && g.group_password === pwd);
+      if (!found) return showToast("Username atau PIN kelompok tidak cocok!", "error");
+      appState.session = { role: 'student', studentGroupId: found.id, adminEmail: null };
+      updateSessionUI();
+      showToast(`Selamat datang, ${found.group_name}!`, "success");
+      return;
+    }
+
+    // Mode Produksi: Query langsung ke tabel sim_groups di Supabase
+    try {
+      const { data, error } = await supabase
+        .from('sim_groups')
+        .select('*')
+        .eq('group_username', uname)
+        .eq('group_password', pwd)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) {
+        return showToast("Username atau PIN kelompok salah!", "error");
+      }
+
+      appState.session = { role: 'student', studentGroupId: data.id, adminEmail: null };
+      await fetchProductionData();
+      showToast(`Berhasil masuk sebagai ${data.group_name}`, "success");
+    } catch (err) {
+      showToast("Gagal login kelompok: " + err.message, "error");
+    }
+  };
+
+  window.quickLoginStudent = function() {
+    if (!IS_PREVIEW) return;
+    const first = appState.groups[0];
+    if (first) {
+      appState.session = { role: 'student', studentGroupId: first.id, adminEmail: null };
+      updateSessionUI();
+      showToast(`Mode Preview: Masuk sebagai ${first.group_name}`, "info");
+    }
+  };
+
+  function populateStudentEditor() {
+    const grp = appState.groups.find(g => g.id === appState.session.studentGroupId);
+    if (!grp) return;
+
+    document.getElementById('stu-edit-header').textContent = `Edit Profil: ${grp.group_name}`;
+    document.getElementById('stu-group-name').value = grp.group_name;
+    document.getElementById('stu-category').value = grp.category;
+    document.getElementById('stu-system-title').value = grp.system_title;
+    document.getElementById('stu-description').value = grp.description || '';
+
+    const listEl = document.getElementById('stu-members-list');
+    listEl.innerHTML = '';
+    (grp.members || []).forEach(m => addMemberRow('stu-members-list', m.name, m.role));
+  }
+
+  window.addMemberRow = function(containerId, nameVal = '', roleVal = MEMBER_ROLES[0]) {
+    const container = document.getElementById(containerId);
+    if (container.children.length >= 6) {
+      return showToast("Maksimal 6 anggota per kelompok", "info");
+    }
+    const row = document.createElement('div');
+    row.className = "flex flex-col sm:flex-row gap-2 items-center member-row-item";
+    const options = MEMBER_ROLES.map(r => `<option value="${r}" ${r === roleVal ? 'selected' : ''}>${r}</option>`).join('');
+    row.innerHTML = `
+      <input type="text" placeholder="Nama Lengkap Mahasiswa" value="${escapeHTML(nameVal)}" required class="mem-name w-full sm:flex-1 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold" />
+      <select class="mem-role w-full sm:w-52 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold">${options}</select>
+      <button type="button" onclick="this.parentElement.remove()" class="p-2 rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-100 self-end sm:self-center">
+        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+      </button>
+    `;
+    container.appendChild(row);
+    lucide.createIcons();
+  };
+
+  function collectMembersFromContainer(containerId) {
+    const rows = document.querySelectorAll(`#${containerId} .member-row-item`);
+    const result = [];
+    rows.forEach(r => {
+      const name = r.querySelector('.mem-name').value.trim();
+      const role = r.querySelector('.mem-role').value;
+      if (name) result.push({ name, role });
+    });
+    return result;
+  }
+
+  window.handleSaveStudentProfile = async function(e) {
+    e.preventDefault();
+    const grpId = appState.session.studentGroupId;
+    const payload = {
+      group_name: document.getElementById('stu-group-name').value.trim(),
+      category: document.getElementById('stu-category').value,
+      system_title: document.getElementById('stu-system-title').value.trim(),
+      description: document.getElementById('stu-description').value.trim(),
+      members: collectMembersFromContainer('stu-members-list'),
+      updated_at: new Date().toISOString()
+    };
+
+    if (IS_PREVIEW) {
+      const idx = appState.groups.findIndex(g => g.id === grpId);
+      if (idx !== -1) {
+        appState.groups[idx] = { ...appState.groups[idx], ...payload };
+      }
+      renderAll();
+      showToast("Profil kelompok berhasil diperbarui!", "success");
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('sim_groups')
+        .update(payload)
+        .eq('id', grpId);
+
+      if (error) throw error;
+      await fetchProductionData();
+      showToast("Profil kelompok tersimpan ke Supabase!", "success");
+    } catch (err) {
+      showToast("Gagal menyimpan perubahan: " + err.message, "error");
+    }
+  };
+
+  // =========================================================================
+  // PANEL DOSEN (SUPABASE AUTH, PENILAIAN RUBRIK REAL-TIME, BADGE & CSV)
+  // =========================================================================
+  window.handleAdminLogin = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('adm-login-email').value.trim();
+    const password = document.getElementById('adm-login-password').value;
+
+    if (IS_PREVIEW) {
+      appState.session = { role: 'admin', studentGroupId: null, adminEmail: email };
+      updateSessionUI();
+      showToast("Mode Preview: Login Dosen Berhasil", "success");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      appState.session = { role: 'admin', studentGroupId: null, adminEmail: data.user.email };
+      await fetchProductionData();
+      showToast("Selamat datang di Panel Dosen!", "success");
+    } catch (err) {
+      showToast("Login Dosen gagal: " + err.message, "error");
+    }
+  };
+
+  window.quickLoginAdmin = function() {
+    if (!IS_PREVIEW) return;
+    appState.session = { role: 'admin', studentGroupId: null, adminEmail: 'dosen.preview@esaunggul.ac.id' };
+    updateSessionUI();
+    showToast("Mode Preview: Masuk sebagai Dosen Pengampu", "info");
+  };
+
+  window.handleUpdateSettings = async function() {
+    const newWeek = document.getElementById('adm-week-input').value.trim();
+    if (!newWeek) return;
+
+    if (IS_PREVIEW) {
+      appState.settings.current_week = newWeek;
+      renderAll();
+      showToast("Fase minggu diperbarui!", "success");
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('sim_settings')
+        .upsert({ id: 1, current_week: newWeek, academic_term: appState.settings.academic_term });
+
+      if (error) throw error;
+      await fetchProductionData();
+      showToast("Fase minggu tersimpan ke Supabase!", "success");
+    } catch (err) {
+      showToast("Gagal menyimpan pengaturan: " + err.message, "error");
+    }
+  };
+
+  function renderAdminPanel() {
+    const container = document.getElementById('admin-groups-list');
+    const sorted = getSortedGroups();
+
+    if (sorted.length === 0) {
+      container.innerHTML = `<div class="col-span-2 glass-panel rounded-3xl p-8 text-center text-xs text-slate-500">Belum ada kelompok. Klik <strong>"Tambah Kelompok Baru"</strong> untuk memulai.</div>`;
+      return;
+    }
+
+    container.innerHTML = sorted.map((g, idx) => {
+      const rubrics = [
+        { key: 'score_empathize', label: '1. Empathize & Define', max: 15, val: g.score_empathize },
+        { key: 'score_ideate', label: '2. Ideate & Solution', max: 15, val: g.score_ideate },
+        { key: 'score_prototype', label: '3. Prototype / Dev', max: 25, val: g.score_prototype },
+        { key: 'score_testing', label: '4. Testing & Improve', max: 15, val: g.score_testing },
+        { key: 'score_final', label: '5. Final Product', max: 20, val: g.score_final },
+        { key: 'score_presentation', label: '6. Presentation', max: 10, val: g.score_presentation }
+      ];
+
+      const slidersHtml = rubrics.map(r => `
+        <div>
+          <div class="flex justify-between text-[11px] font-bold mb-1">
+            <span class="text-slate-600">${r.label}</span>
+            <span class="text-[#1F4E79]"><span id="val-${g.id}-${r.key}">${r.val}</span> / ${r.max}</span>
+          </div>
+          <input type="range" min="0" max="${r.max}" step="0.5" value="${r.val}"
+            oninput="livePreviewSlider('${g.id}', '${r.key}', this.value)"
+            onchange="saveRubricScore('${g.id}', '${r.key}', this.value)"
+            class="ueu-slider" />
+        </div>
+      `).join('');
+
+      const badgesToggleHtml = AVAILABLE_BADGES.map(b => {
+        const active = (g.badges || []).includes(b);
+        return `
+          <button type="button" onclick="toggleGroupBadge('${g.id}', '${b}')"
+            class="px-2.5 py-1 rounded-lg text-[10px] font-bold border transition ${active ? 'bg-[#F28C28] text-white border-[#F28C28]' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}">
+            ${active ? '✓ ' : '+ '}${b}
+          </button>
+        `;
+      }).join('');
+
+      return `
+        <div class="glass-panel rounded-3xl p-5 sm:p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-3 pb-3 border-b border-slate-200/70">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-md bg-[#1F4E79] text-white text-[10px] font-extrabold">Rank #${idx + 1}</span>
+                  <span class="text-[11px] font-bold text-slate-400">User: <code>${escapeHTML(g.group_username)}</code> | PIN: <code>${escapeHTML(g.group_password)}</code></span>
+                </div>
+                <h3 class="text-base font-extrabold text-[#1F4E79] mt-1">${escapeHTML(g.group_name)}</h3>
+                <p class="text-xs font-semibold text-slate-500">${escapeHTML(g.system_title)}</p>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-2xl font-extrabold text-[#F28C28]" id="total-card-${g.id}">${g.totalScore}</div>
+                <div class="text-[10px] font-bold text-slate-400">TOTAL SKOR</div>
+              </div>
+            </div>
+
+            <!-- 6 Sliders Rubrik -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3 mt-4">
+              ${slidersHtml}
+            </div>
+
+            <!-- Pemberian Badge Spesial -->
+            <div class="mt-4 pt-3 border-t border-slate-200/70">
+              <div class="text-[11px] font-bold text-slate-500 mb-2">Badge Pencapaian Spesial:</div>
+              <div class="flex flex-wrap gap-1.5">${badgesToggleHtml}</div>
+            </div>
+          </div>
+
+          <div class="mt-5 pt-3 border-t border-slate-200/70 flex items-center justify-between">
+            <button type="button" onclick="snapshotPreviousRank('${g.id}', ${idx + 1})" class="text-[11px] font-bold text-slate-500 hover:text-[#1F4E79]">
+              Kunci Rank Baseline (#${idx + 1})
+            </button>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="openGroupModal('${g.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">
+                Edit Info
+              </button>
+              <button type="button" onclick="deleteGroup('${g.id}')" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold">
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.livePreviewSlider = function(groupId, field, value) {
+    document.getElementById(`val-${groupId}-${field}`).textContent = value;
+    const grp = appState.groups.find(g => g.id === groupId);
+    if (grp) {
+      grp[field] = Number(value);
+      document.getElementById(`total-card-${groupId}`).textContent = calcTotalScore(grp);
+    }
+  };
+
+  window.saveRubricScore = async function(groupId, field, value) {
+    const numVal = Number(value);
+    const grp = appState.groups.find(g => g.id === groupId);
+    if (!grp) return;
+    grp[field] = numVal;
+
+    if (IS_PREVIEW) {
+      renderAll();
+      showToast(`Skor ${grp.group_name} diperbarui!`, "success");
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('sim_groups')
+        .update({ [field]: numVal, updated_at: new Date().toISOString() })
+        .eq('id', groupId);
+
+      if (error) throw error;
+      await fetchProductionData();
+      showToast("Nilai rubrik tersimpan!", "success");
+    } catch (err) {
+      showToast("Gagal menyimpan nilai: " + err.message, "error");
+    }
+  };
+
+  window.toggleGroupBadge = async function(groupId, badgeName) {
+    const grp = appState.groups.find(g => g.id === groupId);
+    if (!grp) return;
+
+    const currentBadges = Array.isArray(grp.badges) ? [...grp.badges] : [];
+    const existsIdx = currentBadges.indexOf(badgeName);
+    if (existsIdx > -1) {
+      currentBadges.splice(existsIdx, 1);
+    } else {
+      currentBadges.push(badgeName);
+    }
+
+    if (IS_PREVIEW) {
+      grp.badges = currentBadges;
+      renderAll();
+      showToast("Badge diperbarui!", "success");
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('sim_groups')
+        .update({ badges: currentBadges, updated_at: new Date().toISOString() })
+        .eq('id', groupId);
+
+      if (error) throw error;
+      await fetchProductionData();
+      showToast("Badge kelompok diperbarui!", "success");
+    } catch (err) {
+      showToast("Gagal memperbarui badge: " + err.message, "error");
+    }
+  };
+
+  window.snapshotPreviousRank = async function(groupId, currentRank) {
+    if (IS_PREVIEW) {
+      const grp = appState.groups.find(g => g.id === groupId);
+      if (grp) grp.previous_rank = currentRank;
+      renderAll();
+      showToast("Baseline peringkat dikunci untuk perbandingan tren!", "info");
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('sim_groups')
+        .update({ previous_rank: currentRank })
+        .eq('id', groupId);
+      if (error) throw error;
+      await fetchProductionData();
+      showToast("Baseline peringkat berhasil dikunci!", "info");
+    } catch (err) {
+      showToast("Gagal mengunci rank: " + err.message, "error");
+    }
+  };
+
+  // Modal Tambah / Edit Kelompok (Dosen)
+  window.openGroupModal = function(groupId = null) {
+    const modal = document.getElementById('group-form-modal');
+    const membersEl = document.getElementById('adm-members-list');
+    membersEl.innerHTML = '';
+
+    if (groupId) {
+      const g = appState.groups.find(item => item.id === groupId);
+      document.getElementById('modal-form-title').textContent = "Edit Data Kelompok";
+      document.getElementById('adm-edit-group-id').value = g.id;
+      document.getElementById('adm-form-username').value = g.group_username;
+      document.getElementById('adm-form-password').value = g.group_password;
+      document.getElementById('adm-form-name').value = g.group_name;
+      document.getElementById('adm-form-category').value = g.category;
+      document.getElementById('adm-form-title').value = g.system_title;
+      document.getElementById('adm-form-desc').value = g.description || '';
+      (g.members || []).forEach(m => addMemberRow('adm-members-list', m.name, m.role));
+    } else {
+      document.getElementById('modal-form-title').textContent = "Tambah Kelompok Baru";
+      document.getElementById('adm-edit-group-id').value = '';
+      document.getElementById('adm-form-username').value = '';
+      document.getElementById('adm-form-password').value = '';
+      document.getElementById('adm-form-name').value = '';
+      document.getElementById('adm-form-category').value = 'UMKM';
+      document.getElementById('adm-form-title').value = '';
+      document.getElementById('adm-form-desc').value = '';
+      MEMBER_ROLES.slice(0, 4).forEach(r => addMemberRow('adm-members-list', '', r));
+    }
+    modal.classList.remove('hidden');
+  };
+
+  window.closeGroupModal = function() {
+    document.getElementById('group-form-modal').classList.add('hidden');
+  };
+
+  window.handleAdminSaveGroup = async function(e) {
+    e.preventDefault();
+    const editId = document.getElementById('adm-edit-group-id').value;
+    const baseData = {
+      group_username: document.getElementById('adm-form-username').value.trim(),
+      group_password: document.getElementById('adm-form-password').value.trim(),
+      group_name: document.getElementById('adm-form-name').value.trim(),
+      category: document.getElementById('adm-form-category').value,
+      system_title: document.getElementById('adm-form-title').value.trim(),
+      description: document.getElementById('adm-form-desc').value.trim(),
+      members: collectMembersFromContainer('adm-members-list'),
+      updated_at: new Date().toISOString()
+    };
+
+    if (IS_PREVIEW) {
+      if (editId) {
+        const idx = appState.groups.findIndex(g => g.id === editId);
+        if (idx !== -1) appState.groups[idx] = { ...appState.groups[idx], ...baseData };
+      } else {
+        appState.groups.push({
+          id: 'prev-' + Date.now(),
+          ...baseData,
+          score_empathize: 0,
+          score_ideate: 0,
+          score_prototype: 0,
+          score_testing: 0,
+          score_final: 0,
+          score_presentation: 0,
+          previous_rank: appState.groups.length + 1,
+          badges: []
+        });
+      }
+      closeGroupModal();
+      renderAll();
+      showToast("Kelompok berhasil disimpan!", "success");
+      return;
+    }
+
+    try {
+      if (editId) {
+        const { error } = await supabase.from('sim_groups').update(baseData).eq('id', editId);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('sim_groups').insert([{
+          ...baseData,
+          score_empathize: 0,
+          score_ideate: 0,
+          score_prototype: 0,
+          score_testing: 0,
+          score_final: 0,
+          score_presentation: 0,
+          previous_rank: appState.groups.length + 1,
+          badges: []
+        }]);
+        if (error) throw error;
+      }
+      closeGroupModal();
+      await fetchProductionData();
+      showToast("Data kelompok tersimpan di Supabase!", "success");
+    } catch (err) {
+      showToast("Gagal menyimpan kelompok: " + err.message, "error");
+    }
+  };
+
+  window.deleteGroup = async function(groupId) {
+    if (!confirm("Yakin ingin menghapus kelompok ini secara permanen?")) return;
+
+    if (IS_PREVIEW) {
+      appState.groups = appState.groups.filter(g => g.id !== groupId);
+      renderAll();
+      showToast("Kelompok dihapus", "info");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from('sim_groups').delete().eq('id', groupId);
+      if (error) throw error;
+      await fetchProductionData();
+      showToast("Kelompok berhasil dihapus dari Supabase", "info");
+    } catch (err) {
+      showToast("Gagal menghapus: " + err.message, "error");
+    }
+  };
+
+  // =========================================================================
+  // EKSPOR REKAP NILAI KE CSV / EXCEL
+  // =========================================================================
+  window.exportToCSV = function() {
+    const sorted = getSortedGroups();
+    if (sorted.length === 0) return showToast("Tidak ada data untuk diekspor", "error");
+
+    const headers = [
+      "Peringkat", "Nama Kelompok", "Kategori", "Judul Sistem", "Daftar Anggota",
+      "Empathize (15)", "Ideate (15)", "Prototype (25)", "Testing (15)",
+      "Final Product (20)", "Presentation (10)", "Total Skor (100)", "Badges"
+    ];
+
+    const rows = sorted.map((g, idx) => {
+      const membersStr = (g.members || []).map(m => `${m.name} (${m.role})`).join("; ");
+      const badgesStr = (g.badges || []).join("; ");
+      return [
+        idx + 1,
+        `"${(g.group_name || '').replace(/"/g, '""')}"`,
+        `"${(g.category || '').replace(/"/g, '""')}"`,
+        `"${(g.system_title || '').replace(/"/g, '""')}"`,
+        `"${membersStr.replace(/"/g, '""')}"`,
+        g.score_empathize,
+        g.score_ideate,
+        g.score_prototype,
+        g.score_testing,
+        g.score_final,
+        g.score_presentation,
+        g.totalScore,
+        `"${badgesStr.replace(/"/g, '""')}"`
+      ].join(",");
+    });
+
+    const csvContent = "\uFEFF" + [headers.join(","), ...rows].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Rekap_Nilai_SIM_Innovation_UEU_${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    showToast("File CSV rekap nilai berhasil diunduh!", "success");
+  };
+
+  // Jalankan Aplikasi
+  initApp();
+</script>
+</body>
+</html>
